@@ -17,34 +17,35 @@ Git pour cloner le projet.
 
 ## 🚀 Installation et Exécution
 1. Cloner le projet
-   bash
-   Copier le code
+   ```
    git clone https://github.com/ton-utilisateur/kyc-beneficiaires.git
    cd kyc-beneficiaires
+   ```
 2. Construire et lancer l'application
-   bash
-   Copier le code
+   ```
    mvn clean install
    mvn spring-boot:run
-3. Accéder à l'API
-   URL de base : http://localhost:8080
+   ```
+3. Accéder à l'API URL de base : http://localhost:8080
    Console H2 (base mémoire) :
    URL : http://localhost:8080/h2-console
    JDBC URL : jdbc:h2:mem:bpifrance_db
    Username : sa
    Password : (laisser vide)
-   📚 Endpoints disponibles
-1. Créer une entreprise
+
+## 📚 Endpoints disponibles
+Créer une entreprise
    Méthode : POST
    URL : /entreprises
    Corps (JSON) :
    json
-   Copier le code
+```
    {
    "nom": "Entreprise ABC"
    }
    Réponse : 201 Created avec un Location vers la ressource.
-2. Récupérer les bénéficiaires d'une entreprise
+   ```
+ Récupérer les bénéficiaires d'une entreprise
    Méthode : GET
 
 URL : /entreprises/{id}/beneficiaires
