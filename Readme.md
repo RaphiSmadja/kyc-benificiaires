@@ -33,51 +33,6 @@ Git pour cloner le projet.
    Username : sa
    Password : (laisser vide)
 
-## 📚 Endpoints disponibles
-Créer une entreprise
-   Méthode : POST
-   URL : /entreprises
-   Corps (JSON) :
-   json
-```
-   {
-   "nom": "Entreprise ABC"
-   }
-   Réponse : 201 Created avec un Location vers la ressource.
-   ```
- Récupérer les bénéficiaires d'une entreprise
-   Méthode : GET
-
-URL : /entreprises/{id}/beneficiaires
-
-Paramètre :
-
-{id} : Identifiant de l'entreprise.
-Exemple de réponse (200 OK) :
-```
-[{
-    "id": 1, 
-    "nom": "Jean Louis",
-    "pourcentageCapital": 30.5
-}]
-```
-Réponses possibles :
-
-200 OK : Liste des bénéficiaires.
-404 Not Found : Entreprise non trouvée.
-
-## 💻 Exemples de requêtes cURL
-Créer une entreprise
-```
-curl -X POST -H "Content-Type: application/json" -d '{
-"nom": "Entreprise ABC"
-}' http://localhost:8080/entreprises
-```
-Récupérer les bénéficiaires
-```
-curl -X GET http://localhost:8080/entreprises/1/beneficiaires
-```
-
 ## 🛠 Architecture du projet
 
 ```
@@ -104,7 +59,7 @@ Ajouter des DTOs pour séparer les entités des données exposées via l'API.
 Projet développé par Raphael SMADJA dans le cadre d’un exercice technique.
 
 ## 📜 Licence
-Ce projet est sous licence MIT. Tu peux le réutiliser librement.
+Ce projet est pour BPIFrance
 
 ## 📧 Contact
 Si vous avez des questions, n'hésitez pas à me contacter :
