@@ -12,8 +12,8 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Gestion des Voyages API")
+                        .title("Gestion des KYC BPI")
                         .version("1.0")
-                        .description("Documentation de l'API pour l'application de gestion de voyages."));
+                        .description("Documentation de l'API pour l'application des KYC."));
     }
 }
