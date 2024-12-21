@@ -3,7 +3,6 @@ package fr.bpifrance.kyc_beneficiaires.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "person")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,6 +10,9 @@ public class Person {
 
     private String name;
 
+    public Person() {
+
+    }
     public Person(Long id, String name) {
         this.id = id;
         this.name = name;

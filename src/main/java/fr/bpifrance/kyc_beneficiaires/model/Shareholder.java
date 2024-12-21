@@ -2,8 +2,6 @@ package fr.bpifrance.kyc_beneficiaires.model;
 
 import jakarta.persistence.*;
 
-@Table(name = "shareholder")
-
 @Entity
 public class Shareholder {
     @Id
@@ -20,6 +18,10 @@ public class Shareholder {
     private Company shareholderCompany;
 
     private Double percentage;
+
+    public Shareholder() {
+
+    }
 
     public Shareholder(Long id, Company company, Person person, Company shareholderCompany, Double percentage) {
         this.id = id;

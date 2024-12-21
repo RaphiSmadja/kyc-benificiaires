@@ -3,8 +3,7 @@ package fr.bpifrance.kyc_beneficiaires.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "effective")
-public class Effectivebeneficiary {
+public class EffectiveBeneficiary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,7 +18,7 @@ public class Effectivebeneficiary {
 
     private Double totalPercentage;
 
-    public Effectivebeneficiary(Long id, Person person, Company company, boolean isDirect, Double totalPercentage) {
+    public EffectiveBeneficiary(Long id, Person person, Company company, boolean isDirect, Double totalPercentage) {
         this.id = id;
         this.person = person;
         this.company = company;

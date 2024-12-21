@@ -6,15 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "company")
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Shareholder> shareholders = new ArrayList<>();
+
+    public Company() {
+    }
 
     public Company(Long id, String name, List<Shareholder> shareholders) {
         this.id = id;
