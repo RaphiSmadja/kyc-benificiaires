@@ -1,6 +1,7 @@
 package fr.bpifrance.kyc_beneficiaires.controller;
 
 import fr.bpifrance.kyc_beneficiaires.dto.BeneficiaryDTO;
+import fr.bpifrance.kyc_beneficiaires.dto.CompanyDTO;
 import fr.bpifrance.kyc_beneficiaires.service.CompanyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -56,6 +58,69 @@ public class CompanyController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(List.of(new BeneficiaryDTO(null, e.getMessage(), null, false)));
         }
+    }
+
+    @Operation(summary = "Add a beneficiary to a company", description = "Adds a new beneficiary (person or company) to the specified company.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Beneficiary added successfully"),
+            @ApiResponse(responseCode = "404", description = "Company or beneficiary not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid input or percentage exceeds 100%")
+    })
+    @PostMapping("/{companyId}/beneficiaries")
+    public ResponseEntity<String> addBeneficiaryToCompany(
+            @Parameter(description = "ID of the company to which the beneficiary is being added")
+            @PathVariable Long companyId,
+            @RequestBody BeneficiaryDTO beneficiaryDTO) {
+        logger.info("Received request to add beneficiary to company ID: {}", companyId);
+
+        try {
+            companyService.addBeneficiary(companyId, beneficiaryDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Beneficiary added successfully.");
+        } catch (EntityNotFoundException e) {
+            logger.error("Error adding beneficiary to company ID: {}. {}", companyId, e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            logger.error("Invalid request for company ID: {}. {}", companyId, e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Get a company by ID", description = "Fetches the details of a company by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Company details returned successfully"),
+            @ApiResponse(responseCode = "404", description = "Company not found")
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<CompanyDTO> getCompanyById(
+            @Parameter(description = "ID of the company to fetch")
+            @PathVariable Long id) {
+        logger.info("Received request to fetch company with ID: {}", id);
+        try {
+            CompanyDTO company = companyService.getCompanyById(id);
+            return ResponseEntity.ok(company);
+        } catch (EntityNotFoundException e) {
+            logger.error("Company with ID: {} not found. Error: {}", id, e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @Operation(summary = "Create a new company", description = "Creates a new company with the given name.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Company created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input (e.g., empty name)")
+    })
+    @PostMapping
+    public ResponseEntity<Void> createCompany(
+            @Parameter(description = "Name of the company to be created", example = "Company A")
+            @RequestBody String companyName) {
+        logger.info("Received request to create a new company with name: {}", companyName);
+
+        CompanyDTO createdCompany = companyService.saveCompany(companyName);
+
+        URI location = URI.create(String.format("/companies/%d", createdCompany.getId()));
+
+        logger.info("Company created with ID: {}", createdCompany.getId());
+        return ResponseEntity.created(location).build();
     }
 
     private void validateType(String type) {
