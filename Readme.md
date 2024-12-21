@@ -32,6 +32,7 @@ Git pour cloner le projet.
    JDBC URL : jdbc:h2:mem:bpifrance_db
    Username : sa
    Password : (laisser vide)
+4. Accéder au swagger de l'API : http://localhost:8080/swagger-ui/
 
 ## 🛠 Architecture du projet
 
@@ -40,6 +41,9 @@ src/
 ├── main/
 │   ├── java/
 │   │   └── fr/bpifrance/kyc/
+│   │       ├── config/        # Swagger REST
+│   │       ├── dto/           # DTO
+│   │       ├── mapper/        # mapper
 │   │       ├── controller/    # Contrôleurs REST
 │   │       ├── model/         # Entités JPA
 │   │       ├── repository/    # Repositories Spring Data JPA
@@ -52,9 +56,9 @@ src/
 
 ## 📈 Améliorations futures
 Ajouter des validations pour les champs d'entrée avec spring-boot-starter-validation.
-Implémenter des tests unitaires avec JUnit 5.
+Implémenter des tests integration avec JUnit 5.
 Remplacer H2 par une base de données persistante (ex. PostgreSQL).
-Ajouter des DTOs pour séparer les entités des données exposées via l'API.
+
 ## 👤 Auteur
 Projet développé par Raphael SMADJA dans le cadre d’un exercice technique.
 
